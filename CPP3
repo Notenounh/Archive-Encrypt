@@ -1,0 +1,21 @@
+import base64
+from Crypto.Cipher import AES
+
+pergunta = input("Qual o nome do arquivo? ")
+with open(pergunta, "rb") as arquivo:
+    arquivo = arquivo.read()
+    crip64 = (base64.urlsafe_b64encode(arquivo))
+    crip64 = (crip64.decode('utf-8'))
+    print("Arquivo criptografado em base64: {}".format(crip64))
+    
+    def validation(crip64):
+        while len(crip64) % 16 != 0:
+            crip64 += ' '
+        return crip64
+    
+x = validation(crip64)
+chave = "FIAP2020fiap2020"
+aes = AES.new(chave, AES.MODE_ECB)
+texto_limpo = crip64
+texto_criptografado = aes.encrypt(crip64)
+print("Arquivo criptografado:", texto_criptografado)
